@@ -1,4 +1,4 @@
-# Search component
+# Search Component
 
-This a search component meant to be integrated with PIDESCO for the Advanced programming course project.
-In Phase 2 this component should be able to provide its own service for other components to use.
+This is a search component meant to be integrated with PIDESCO for the Advanced Programming course project. <br>
+In Phase 2 it should be able to provide its own service for other components to use.
