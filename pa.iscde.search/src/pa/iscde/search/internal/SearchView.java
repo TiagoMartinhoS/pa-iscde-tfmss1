@@ -132,21 +132,21 @@ public class SearchView implements PidescoView {
 	 * @param input
 	 * @param output
 	 */
-	private void iterateAndWrite(PackageElement dir, MapAccessor visitor, JavaEditorServices editor, 
+	private void iterateAndWrite(SourceElement e, MapAccessor visitor, JavaEditorServices editor, 
 			String input, Text output) {
-		//usar recursão por causa das packages? 
-		//StackOverflow ao converter SourceElement em SourcePackage para usar o getChildren()
-		for (SourceElement element : dir.getChildren()) {
-			if (!element.isPackage()) {
-				editor.parseFile(element.getFile(), (ASTVisitor) visitor);
-				if (visitor.getMap().containsKey(input)) {
-					ArrayList<Integer> sourceLines = visitor.getMap().get(input);
-					output.append(element.getName() + " -> " + input + " node on line(s) "
-							+ sourceLines + System.lineSeparator());
-					visitor.clearMap();
-				}
-			} //if package chamar função recursiva. PROBLEMA: SourceElement não tem getChildren 
-			//e cast para SourcePackage dá StackOverflow ??
+		
+		if (e.isClass()) {
+			editor.parseFile(e.getFile(), (ASTVisitor) visitor);
+			if (visitor.getMap().containsKey(input)) {
+				ArrayList<Integer> sourceLines = visitor.getMap().get(input);
+				output.append(e.getName() + " -> " + input + " node on line(s) "
+						+ sourceLines + System.lineSeparator());
+				visitor.clearMap();
+			}
+		} else {
+			for (SourceElement c : ((PackageElement) e).getChildren()) {
+				iterateAndWrite(c, visitor, editor, input, output);
+			}
 		}
 	}
 	

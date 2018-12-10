@@ -20,10 +20,11 @@
           <tags>persp.actionSet:org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo</tags>
           <tags>persp.actionSet:org.eclipse.ui.actionSet.keyBindings</tags>
           <tags>persp.actionSet:org.eclipse.ui.actionSet.openFiles</tags>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_CMUUoPP5Eei4TNRX8lChXQ" selectedElement="_BleXEfP5Eei4TNRX8lChXQ" horizontal="true">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_CMUUoPP5Eei4TNRX8lChXQ" selectedElement="_CMUUofP5Eei4TNRX8lChXQ" horizontal="true">
             <children xsi:type="advanced:Placeholder" xmi:id="_BleXEfP5Eei4TNRX8lChXQ" elementId="org.eclipse.ui.editorss" containerData="5338" ref="_BlbTwPP5Eei4TNRX8lChXQ"/>
-            <children xsi:type="basic:PartStack" xmi:id="_CMUUofP5Eei4TNRX8lChXQ" elementId="CreatedByGetLastContainer" containerData="4662" selectedElement="_CMZ0MPP5Eei4TNRX8lChXQ">
+            <children xsi:type="basic:PartStack" xmi:id="_CMUUofP5Eei4TNRX8lChXQ" elementId="CreatedByGetLastContainer" containerData="4662" selectedElement="_CcLVkPP5Eei4TNRX8lChXQ">
               <tags>Other</tags>
+              <tags>active</tags>
               <children xsi:type="advanced:Placeholder" xmi:id="_CMZ0MPP5Eei4TNRX8lChXQ" elementId="pt.iscte.pidesco.view:pt.iscte.pidesco.projectbrowser.tree" ref="_CMTGgPP5Eei4TNRX8lChXQ" closeable="true">
                 <tags>View</tags>
                 <tags>categoryTag:Other</tags>
@@ -73,7 +74,6 @@
       <children xsi:type="basic:PartStack" xmi:id="_BlbTwfP5Eei4TNRX8lChXQ" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_c4IKMPh-EeifIZ13lpgPgQ">
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
-        <tags>active</tags>
         <children xsi:type="basic:Part" xmi:id="_C2mr0PfrEeiFlMlUmSoHFg" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="Activator.java" iconURI="platform:/plugin/pt.iscte.pidesco.javaeditor/images/javafile.gif" closeable="true">
           <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;pt.iscte.pidesco.javaeditor&quot; name=&quot;Activator.java&quot; partName=&quot;Activator.java&quot; title=&quot;Activator.java&quot; tooltip=&quot;C:\dev\pidesco\pa.iscde.search\testws\Activator.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; uri=&quot;file:/C:/dev/pidesco/pa.iscde.search/testws/Activator.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;0&quot; selectionTopPixel=&quot;0&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
@@ -85,8 +85,6 @@
           <tags>Editor</tags>
           <tags>pt.iscte.pidesco.javaeditor</tags>
           <tags>removeOnHide</tags>
-          <tags>active</tags>
-          <tags>activeOnClose</tags>
         </children>
       </children>
     </sharedElements>
@@ -100,7 +98,7 @@
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
       </menus>
-      <toolbar xmi:id="_CM0D4fP5Eei4TNRX8lChXQ" elementId="pt.iscte.pidesco.view"/>
+      <toolbar xmi:id="_CM0D4fP5Eei4TNRX8lChXQ" elementId="pt.iscte.pidesco.view" visible="false"/>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_CcKugPP5Eei4TNRX8lChXQ" elementId="pt.iscte.pidesco.view:pa.iscde.search.view" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Search" iconURI="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewClass" value="pt.iscte.pidesco.internal.AbstractPidescoView"/>
@@ -108,11 +106,13 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view/>"/>
       <tags>View</tags>
       <tags>categoryTag:Other</tags>
+      <tags>active</tags>
+      <tags>activeOnClose</tags>
       <menus xmi:id="_CcOY4PP5Eei4TNRX8lChXQ" elementId="pt.iscte.pidesco.view">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
       </menus>
-      <toolbar xmi:id="_CcOY4fP5Eei4TNRX8lChXQ" elementId="pt.iscte.pidesco.view" visible="false"/>
+      <toolbar xmi:id="_CcOY4fP5Eei4TNRX8lChXQ" elementId="pt.iscte.pidesco.view"/>
     </sharedElements>
     <trimBars xmi:id="_Bb3vI_P5Eei4TNRX8lChXQ" elementId="org.eclipse.ui.main.toolbar" contributorURI="platform:/plugin/org.eclipse.ui.workbench" visible="false">
       <children xsi:type="menu:ToolBar" xmi:id="_BiXYsPP5Eei4TNRX8lChXQ" elementId="additions" toBeRendered="false">
@@ -687,7 +687,7 @@
   <addons xmi:id="_Bb3vNPP5Eei4TNRX8lChXQ" elementId="MinMax Addon" contributorURI="platform:/plugin/org.eclipse.ui.workbench" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.MinMaxAddon"/>
   <addons xmi:id="_Bb3vNfP5Eei4TNRX8lChXQ" elementId="org.eclipse.ui.workbench.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.workbench" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_Bb8AkPP5Eei4TNRX8lChXQ" elementId="SplitterAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.splitteraddon.SplitterAddon"/>
-  <addons xmi:id="_IYS0IKimEeS11vbz3f9ezw" elementId="org.eclipse.ui.ide.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
+  <addons xmi:id="_GpBKwfxPEeiQQJFRxDCsxA" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
   <categories xmi:id="_BcKqEPP5Eei4TNRX8lChXQ" elementId="org.eclipse.ui.category.views" name="Views" description="Commands for opening views"/>
   <categories xmi:id="_BcKqEfP5Eei4TNRX8lChXQ" elementId="org.eclipse.ui.category.project" name="Project"/>
   <categories xmi:id="_BcKqEvP5Eei4TNRX8lChXQ" elementId="org.eclipse.ui.category.perspectives" name="Perspectives" description="Commands for opening perspectives"/>
