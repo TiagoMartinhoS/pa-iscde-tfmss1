@@ -25,7 +25,6 @@ public class MethodVisitor extends ASTVisitor implements Searcher {
 	// visits method declaration
 	@Override
 	public boolean visit(MethodDeclaration node) {
-		//decision to add methodDeclaration here
 		String name = node.getName().toString();
 		if (name.equals(searchInput)) {
 			matches.add(new MatchResult(file, name, sourceLine(node), node.getStartPosition()));

@@ -16,7 +16,7 @@ import pa.iscde.search.internal.Searcher;
 
 public class FieldVisitor extends ASTVisitor implements Searcher  {
 
-	private HashMap<File, ArrayList<VariableDeclarationFragment>> fields = new HashMap<File, ArrayList<VariableDeclarationFragment>>();
+	private ArrayList<MatchResult> matches = new ArrayList<MatchResult>();
 	private String searchInput = null;
 	private File file = null;
 	
@@ -31,8 +31,9 @@ public class FieldVisitor extends ASTVisitor implements Searcher  {
 		for(Object o : node.fragments()) {
 			VariableDeclarationFragment var = (VariableDeclarationFragment) o;
 			String name = var.getName().toString();
-			
-			
+			if (name.equals(searchInput)) {
+				matches.add(new MatchResult(file, name, sourceLine(node), node.getStartPosition()));
+			}
 		}
 		return false; // false to avoid child VariableDeclarationFragment to be processed again
 	}
@@ -52,12 +53,12 @@ public class FieldVisitor extends ASTVisitor implements Searcher  {
 
 	@Override
 	public ArrayList<MatchResult> getResults() {
-		return null;
+		return matches;
 	}
 
 	@Override
 	public void clearResults() {
-		// TODO Auto-generated method stub
+		matches.clear();
 		
 	}
 

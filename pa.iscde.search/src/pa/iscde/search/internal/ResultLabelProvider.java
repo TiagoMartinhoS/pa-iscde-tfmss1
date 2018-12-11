@@ -6,36 +6,40 @@ import org.eclipse.swt.graphics.Image;
 
 public class ResultLabelProvider implements ILabelProvider {
 
+	/**
+	 * No need to implement the following 3 methods
+	 */
+	
 	@Override
-	public void addListener(ILabelProviderListener arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void addListener(ILabelProviderListener arg0) {}
+	
 	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void removeListener(ILabelProviderListener arg0) {}
+	
+	@Override
+	public void dispose() {}
+	
 
+	/**
+	 * Returns whether changing the specified property for the specified element affects the label
+	 * 
+	 */
 	@Override
 	public boolean isLabelProperty(Object arg0, String arg1) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
-	public void removeListener(ILabelProviderListener arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	/**
+	 * ListViewers don't support images
+	 */
 	@Override
 	public Image getImage(Object arg0) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Text of the MatchResult on the ListViewer
+	 */
 	@Override
 	public String getText(Object arg0) {
 		return ((MatchResult) arg0).toString();

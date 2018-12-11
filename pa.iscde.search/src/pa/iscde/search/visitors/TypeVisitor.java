@@ -14,7 +14,7 @@ import pa.iscde.search.internal.Searcher;
 
 public class TypeVisitor extends ASTVisitor implements Searcher {
 
-	private HashMap<File, ArrayList<TypeDeclaration>> types = new HashMap<File, ArrayList<TypeDeclaration>>();
+	private ArrayList<MatchResult> matches = new ArrayList<MatchResult>();
 	private String searchInput = null;
 	private File file = null;
 	
@@ -26,7 +26,9 @@ public class TypeVisitor extends ASTVisitor implements Searcher {
 	@Override
 	public boolean visit(TypeDeclaration node) {
 		String name = node.getName().toString();
-		
+		if (name.equals(searchInput)) {
+			matches.add(new MatchResult(file, name, sourceLine(node), node.getStartPosition()));
+		}
 		return true;
 	}
 
@@ -44,14 +46,12 @@ public class TypeVisitor extends ASTVisitor implements Searcher {
 
 	@Override
 	public ArrayList<MatchResult> getResults() {
-		// TODO Auto-generated method stub
-		return null;
+		return matches;
 	}
 
 	@Override
 	public void clearResults() {
-		// TODO Auto-generated method stub
-		
+		matches.clear();
 	}
 
 	

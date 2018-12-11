@@ -1,9 +1,7 @@
 package pa.iscde.search.internal;
 
-
-import java.util.ArrayList;
 import java.util.Map;
-
+import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ListViewer;
@@ -37,12 +35,23 @@ public class SearchView implements PidescoView {
 	MethodVisitor methodVisitor = new MethodVisitor();
 	FieldVisitor fieldVisitor = new FieldVisitor();
 	TypeVisitor typeVisitor = new TypeVisitor();
+	
+	//Services
+	ProjectBrowserServices projBrowser;
+	JavaEditorServices editor;
+	
 
 	@Override
 	public void createContents(Composite viewArea, Map<String, Image> imageMap) {
 
 		BundleContext context = Activator.getContext();
 		viewArea.setLayout(new GridLayout(1, false));
+		
+		//Service references
+		ServiceReference<ProjectBrowserServices> serviceReference = context.getServiceReference(ProjectBrowserServices.class);
+		projBrowser= context.getService(serviceReference);
+		ServiceReference<JavaEditorServices> serviceReference2 = context.getServiceReference(JavaEditorServices.class);
+		editor = context.getService(serviceReference2);
 		
 		//Search label and box
 		Composite searchGroup = new Composite(viewArea, SWT.NONE);
@@ -64,9 +73,9 @@ public class SearchView implements PidescoView {
 		group.setText("Search for:");
 		Button typeRadio = new Button(group, SWT.RADIO);
 		typeRadio.setText("Type");
+		typeRadio.setSelection(true);
 		Button methodRadio = new Button(group, SWT.RADIO);
 		methodRadio.setText("Method");
-		methodRadio.setSelection(true);
 		Button fieldRadio = new Button(group, SWT.RADIO);
 		fieldRadio.setText("Field");
 		GridData groupLayoutData = new GridData(150, 80);
@@ -90,14 +99,8 @@ public class SearchView implements PidescoView {
 		listViewer.setLabelProvider(new ResultLabelProvider());
 		ResultList resultList = new ResultList();
 		
-		//Services
-		ServiceReference<ProjectBrowserServices> serviceReference = context.getServiceReference(ProjectBrowserServices.class);
-		ProjectBrowserServices projBrowser= context.getService(serviceReference);
-		ServiceReference<JavaEditorServices> serviceReference2 = context.getServiceReference(JavaEditorServices.class);
-		JavaEditorServices editor = context.getService(serviceReference2);
 		
-
-		
+		//ListViewer listener
 		listViewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
 			public void doubleClick(DoubleClickEvent arg0) {
@@ -118,31 +121,24 @@ public class SearchView implements PidescoView {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				PackageElement root = projBrowser.getRootPackage();
-				methodVisitor.clearResults();
-				fieldVisitor.clearResults();
-				typeVisitor.clearResults();
-				
+
 				if (methodRadio.getSelection()) {
-					methodVisitor.setSearchInput(searchBox.getText());
-					Scanner.iterateAndWrite(root, methodVisitor, editor);
-					resultList.setResultList(methodVisitor.getResults());
-					
+					search(methodVisitor, searchBox.getText(), root, resultList);
+				} else if (fieldRadio.getSelection()) {
+					search(fieldVisitor, searchBox.getText(), root, resultList);
+				} else if (typeRadio.getSelection()) {
+					search(typeVisitor, searchBox.getText(), root, resultList);
 				}
-					//clear the map and the last used list after iteration and setting the results on the ListViewer
-//					methodVisitor.clearMap();
-//					methodVisitor.clearList();
-//				} else if (fieldRadio.getSelection()) {
-//					fieldVisitor.setSearchInput(searchBox.getText());
-//					Scanner.iterateAndWrite(root, fieldVisitor, editor, textArea);
-//				} else if (typeRadio.getSelection()) {
-//					typeVisitor.setSearchInput(searchBox.getText());
-//					Scanner.iterateAndWrite(root, typeVisitor, editor, textArea);
-//				}
 				listViewer.setInput(resultList);
-				
-	
 			}
 		});
+	}
+	
+	private void search(Searcher searcher, String input, PackageElement dir, ResultList resultList) {
+		searcher.clearResults();
+		searcher.setSearchInput(input);
+		Scanner.iterateAndWrite(dir, searcher, editor);
+		resultList.setResultList(searcher.getResults());
 	}
 	
 	
