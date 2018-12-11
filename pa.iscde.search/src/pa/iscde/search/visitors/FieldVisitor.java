@@ -1,8 +1,8 @@
 package pa.iscde.search.visitors;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -11,11 +11,14 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
-import pa.iscde.search.internal.MapAccessor;
+import pa.iscde.search.internal.MatchResult;
+import pa.iscde.search.internal.Searcher;
 
-public class FieldVisitor extends ASTVisitor implements MapAccessor {
+public class FieldVisitor extends ASTVisitor implements Searcher  {
 
-	private HashMap<String, ArrayList<Integer>> fields = new HashMap<>();
+	private HashMap<File, ArrayList<VariableDeclarationFragment>> fields = new HashMap<File, ArrayList<VariableDeclarationFragment>>();
+	private String searchInput = null;
+	private File file = null;
 	
 	private static int sourceLine(ASTNode node) {
 		return ((CompilationUnit) node.getRoot()).getLineNumber(node.getStartPosition());
@@ -28,27 +31,39 @@ public class FieldVisitor extends ASTVisitor implements MapAccessor {
 		for(Object o : node.fragments()) {
 			VariableDeclarationFragment var = (VariableDeclarationFragment) o;
 			String name = var.getName().toString();
-			if (!fields.containsKey(name)) {
-				ArrayList<Integer> sourceLines = new ArrayList<>();
-				sourceLines.add(sourceLine(node));
-				fields.put(name, sourceLines);
-			} else {
-				fields.get(name).add(sourceLine(node));
-			}
+			
 			
 		}
 		return false; // false to avoid child VariableDeclarationFragment to be processed again
 	}
-	
+
+
 	@Override
-	public HashMap<String, ArrayList<Integer>> getMap() {
-		return fields;
+	public void setFile(File file) {
+		this.file = file;
+		
 	}
 
 	@Override
-	public void clearMap() {
-		fields.clear();
+	public void setSearchInput(String input) {
+		this.searchInput = input;
 		
 	}
+
+	@Override
+	public ArrayList<MatchResult> getResults() {
+		return null;
+	}
+
+	@Override
+	public void clearResults() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	
 
 }

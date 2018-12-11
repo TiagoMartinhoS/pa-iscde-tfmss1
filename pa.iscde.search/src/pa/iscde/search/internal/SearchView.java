@@ -1,7 +1,12 @@
 package pa.iscde.search.internal;
 
 
+import java.util.ArrayList;
 import java.util.Map;
+
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -27,6 +32,11 @@ import pt.iscte.pidesco.projectbrowser.model.PackageElement;
 import pt.iscte.pidesco.projectbrowser.service.ProjectBrowserServices;
 
 public class SearchView implements PidescoView {
+	
+	//Visitors
+	MethodVisitor methodVisitor = new MethodVisitor();
+	FieldVisitor fieldVisitor = new FieldVisitor();
+	TypeVisitor typeVisitor = new TypeVisitor();
 
 	@Override
 	public void createContents(Composite viewArea, Map<String, Image> imageMap) {
@@ -73,23 +83,12 @@ public class SearchView implements PidescoView {
 		searchButton.setText("Search");
 		searchButton.setLayoutData(searchButtonData);
 		
-		
-//		//Tree test
-//		Composite treeArea = new Composite(viewArea, SWT.NONE);
-//		treeArea.setLayout(new GridLayout(1, true));
-//		GridData treeData = new GridData(410, 300);
-//		Tree tree = new Tree(treeArea, SWT.NONE);
-//		tree.setLayoutData(treeData);
-		
-		//TextArea
-		Text textArea = new Text(viewArea, SWT.MULTI);
-		textArea.setEditable(false);
-		Color bg = new Color(Display.getCurrent(), 255, 255, 255);
-		textArea.setBackground(bg);
-		GridData textAreaData = new GridData(410, 300);
-		textArea.setLayoutData(textAreaData);
-		textArea.setText("");
-
+		//ListViewer
+		final ListViewer listViewer = new ListViewer(viewArea);
+		listViewer.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		listViewer.setContentProvider(new ResultContentProvider());
+		listViewer.setLabelProvider(new ResultLabelProvider());
+		ResultList resultList = new ResultList();
 		
 		//Services
 		ServiceReference<ProjectBrowserServices> serviceReference = context.getServiceReference(ProjectBrowserServices.class);
@@ -97,24 +96,51 @@ public class SearchView implements PidescoView {
 		ServiceReference<JavaEditorServices> serviceReference2 = context.getServiceReference(JavaEditorServices.class);
 		JavaEditorServices editor = context.getService(serviceReference2);
 		
-		//Visitors
-		MethodVisitor methodVisitor = new MethodVisitor();
-		FieldVisitor fieldVisitor = new FieldVisitor();
-		TypeVisitor typeVisitor = new TypeVisitor();
+
+		
+		listViewer.addDoubleClickListener(new IDoubleClickListener() {
+			@Override
+			public void doubleClick(DoubleClickEvent arg0) {
+				int selection = listViewer.getList().getSelectionIndex();
+				MatchResult selected = (MatchResult) listViewer.getElementAt(selection);
+				editor.openFile(selected.getFile());
+				/*
+				 * Not working as expected
+				 */
+//				editor.selectText(selected.getFile(), selected.getStartIndex(), 0);
+				
+				
+			}
+		});
 		
 		//Search Listener
 		searchButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				textArea.setText("");
 				PackageElement root = projBrowser.getRootPackage();
+				methodVisitor.clearResults();
+				fieldVisitor.clearResults();
+				typeVisitor.clearResults();
+				
 				if (methodRadio.getSelection()) {
-					Scanner.iterateAndWrite(root, methodVisitor, editor, searchBox.getText(), textArea);
-				} else if (fieldRadio.getSelection()) {
-					Scanner.iterateAndWrite(root, fieldVisitor, editor, searchBox.getText(), textArea);
-				} else if (typeRadio.getSelection()) {
-					Scanner.iterateAndWrite(root, typeVisitor, editor, searchBox.getText(), textArea);
+					methodVisitor.setSearchInput(searchBox.getText());
+					Scanner.iterateAndWrite(root, methodVisitor, editor);
+					resultList.setResultList(methodVisitor.getResults());
+					
 				}
+					//clear the map and the last used list after iteration and setting the results on the ListViewer
+//					methodVisitor.clearMap();
+//					methodVisitor.clearList();
+//				} else if (fieldRadio.getSelection()) {
+//					fieldVisitor.setSearchInput(searchBox.getText());
+//					Scanner.iterateAndWrite(root, fieldVisitor, editor, textArea);
+//				} else if (typeRadio.getSelection()) {
+//					typeVisitor.setSearchInput(searchBox.getText());
+//					Scanner.iterateAndWrite(root, typeVisitor, editor, textArea);
+//				}
+				listViewer.setInput(resultList);
+				
+	
 			}
 		});
 	}

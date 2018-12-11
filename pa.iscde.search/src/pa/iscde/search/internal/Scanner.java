@@ -1,6 +1,5 @@
 package pa.iscde.search.internal;
 
-import java.util.ArrayList;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.swt.widgets.Text;
 import pt.iscte.pidesco.javaeditor.service.JavaEditorServices;
@@ -18,20 +17,14 @@ public class Scanner {
 	 * @param input
 	 * @param output
 	 */
-	public static void iterateAndWrite(final SourceElement e, final MapAccessor visitor, final JavaEditorServices editor, 
-			final String input, final Text output) {
-		
+	public static void iterateAndWrite(final SourceElement e, final Searcher visitor, final JavaEditorServices editor) {
 		if (e.isClass()) {
-			editor.parseFile(e.getFile(), (ASTVisitor) visitor);
-			if (visitor.getMap().containsKey(input)) {
-				ArrayList<Integer> sourceLines = visitor.getMap().get(input);
-				output.append(e.getName() + " -> " + input + " node on line(s) "
-						+ sourceLines + System.lineSeparator());
-				visitor.clearMap();
-			}
+			visitor.setFile(e.getFile());
+			//have to cast because visitor is currently a Searcher and not every Searcher is an ASTVisitor
+			editor.parseFile(e.getFile(), (ASTVisitor) visitor); 
 		} else {
 			for (SourceElement c : ((PackageElement) e).getChildren()) {
-				iterateAndWrite(c, visitor, editor, input, output);
+				iterateAndWrite(c, visitor, editor);
 			}
 		}
 	}
