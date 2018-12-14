@@ -12,7 +12,6 @@ import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
 import pa.iscde.search.internal.MatchResult;
-import pa.iscde.search.internal.Searcher;
 
 public class FieldVisitor extends ASTVisitor implements Searcher  {
 
@@ -32,7 +31,7 @@ public class FieldVisitor extends ASTVisitor implements Searcher  {
 			VariableDeclarationFragment var = (VariableDeclarationFragment) o;
 			String name = var.getName().toString();
 			if (name.equals(searchInput)) {
-				matches.add(new MatchResult(file, name, sourceLine(node), node.getStartPosition()));
+				matches.add(new MatchResult(file, name, sourceLine(node), var.getName().getStartPosition()));
 			}
 		}
 		return false; // false to avoid child VariableDeclarationFragment to be processed again

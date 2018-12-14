@@ -7,9 +7,9 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.SimpleName;
 
 import pa.iscde.search.internal.MatchResult;
-import pa.iscde.search.internal.Searcher;
 
 public class MethodVisitor extends ASTVisitor implements Searcher {
 
@@ -25,9 +25,10 @@ public class MethodVisitor extends ASTVisitor implements Searcher {
 	// visits method declaration
 	@Override
 	public boolean visit(MethodDeclaration node) {
-		String name = node.getName().toString();
+		SimpleName methodName = node.getName();
+		String name = methodName.toString();
 		if (name.equals(searchInput)) {
-			matches.add(new MatchResult(file, name, sourceLine(node), node.getStartPosition()));
+			matches.add(new MatchResult(file, name, sourceLine(methodName), methodName.getStartPosition()));
 		}
 		
 		return true;

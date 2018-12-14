@@ -59,7 +59,7 @@ public class MatchResult {
 	
 	@Override
 	public String toString() {
-		return file.getName() + ": " + methodName + " on line " + lineNumber;
+		return file.getName() + ": " + methodName + " on line " + lineNumber + " offset " + startIndex;
 	}
 	
 	

@@ -23,6 +23,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import pa.iscde.search.visitors.FieldVisitor;
 import pa.iscde.search.visitors.MethodVisitor;
+import pa.iscde.search.visitors.Searcher;
 import pa.iscde.search.visitors.TypeVisitor;
 import pt.iscte.pidesco.extensibility.PidescoView;
 import pt.iscte.pidesco.javaeditor.service.JavaEditorServices;
@@ -110,7 +111,7 @@ public class SearchView implements PidescoView {
 				/*
 				 * Not working as expected
 				 */
-//				editor.selectText(selected.getFile(), selected.getStartIndex(), 0);
+				editor.selectText(selected.getFile(), selected.getStartIndex(), 10);
 				
 				
 			}

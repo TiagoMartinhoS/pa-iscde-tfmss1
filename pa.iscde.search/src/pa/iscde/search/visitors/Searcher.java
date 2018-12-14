@@ -1,10 +1,12 @@
-package pa.iscde.search.internal;
+package pa.iscde.search.visitors;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+
+import pa.iscde.search.internal.MatchResult;
 
 public interface Searcher {
 	

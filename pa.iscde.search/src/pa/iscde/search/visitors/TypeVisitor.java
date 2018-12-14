@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import pa.iscde.search.internal.MatchResult;
-import pa.iscde.search.internal.Searcher;
 
 public class TypeVisitor extends ASTVisitor implements Searcher {
 
@@ -27,7 +26,7 @@ public class TypeVisitor extends ASTVisitor implements Searcher {
 	public boolean visit(TypeDeclaration node) {
 		String name = node.getName().toString();
 		if (name.equals(searchInput)) {
-			matches.add(new MatchResult(file, name, sourceLine(node), node.getStartPosition()));
+			matches.add(new MatchResult(file, name, sourceLine(node), node.getName().getStartPosition()));
 		}
 		return true;
 	}

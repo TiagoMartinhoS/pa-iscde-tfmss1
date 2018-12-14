@@ -2,6 +2,8 @@ package pa.iscde.search.internal;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.swt.widgets.Text;
+
+import pa.iscde.search.visitors.Searcher;
 import pt.iscte.pidesco.javaeditor.service.JavaEditorServices;
 import pt.iscte.pidesco.projectbrowser.model.PackageElement;
 import pt.iscte.pidesco.projectbrowser.model.SourceElement;
