@@ -2,7 +2,7 @@ package pa.iscde.search.services;
 
 import java.util.List;
 
-import pa.iscde.search.internal.MatchResult;
+import pa.iscde.search.model.MatchResult;
 
 /**
  * Represents a listener for events in the Search component

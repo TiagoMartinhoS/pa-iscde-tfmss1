@@ -3,6 +3,8 @@ package pa.iscde.search.internal;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.core.runtime.Assert;
+
+import pa.iscde.search.model.MatchResult;
 import pa.iscde.search.services.SearchListener;
 import pa.iscde.search.services.SearchService;
 import pa.iscde.search.visitors.FieldVisitor;

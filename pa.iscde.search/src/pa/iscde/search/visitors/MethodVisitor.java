@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;
 
-import pa.iscde.search.internal.MatchResult;
+import pa.iscde.search.model.MatchResult;
 
 public class MethodVisitor extends ASTVisitor implements Searcher {
 

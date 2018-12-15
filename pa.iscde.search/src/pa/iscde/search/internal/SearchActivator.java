@@ -7,7 +7,9 @@ import org.eclipse.core.runtime.Assert;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 
+import pa.iscde.search.model.MatchResult;
 import pa.iscde.search.services.SearchListener;
 import pa.iscde.search.services.SearchService;
 import pt.iscte.pidesco.javaeditor.service.JavaEditorServices;
@@ -19,7 +21,7 @@ public class SearchActivator implements BundleActivator {
 	private static SearchActivator instance;
 	private static BundleContext context;
 	private Set<SearchListener> listeners;
-	private SearchService search;
+	private ServiceRegistration<SearchService> search;
 	private JavaEditorServices editor;
 	private ProjectBrowserServices browser;
 
@@ -57,12 +59,13 @@ public class SearchActivator implements BundleActivator {
 		ServiceReference<JavaEditorServices> editorReference = context.getServiceReference(JavaEditorServices.class);
 		browser = context.getService(browserReference);
 		editor = context.getService(editorReference);
-		search = new SearchServiceImpl();
+		search = context.registerService(SearchService.class, new SearchServiceImpl(), null);
 		instance = this;
 	}
 	
 	public SearchService getService() {
-		return search;
+		ServiceReference<SearchService> ref = context.getServiceReference(SearchService.class);
+		return context.getService(ref);
 	}
 	
 	public JavaEditorServices getEditor() {

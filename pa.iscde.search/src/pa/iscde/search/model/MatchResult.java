@@ -1,4 +1,4 @@
-package pa.iscde.search.internal;
+package pa.iscde.search.model;
 
 import java.io.File;
 

@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 
-import pa.iscde.search.internal.MatchResult;
+import pa.iscde.search.model.MatchResult;
 
 public class PackageVisitor extends ASTVisitor implements Searcher {
 	

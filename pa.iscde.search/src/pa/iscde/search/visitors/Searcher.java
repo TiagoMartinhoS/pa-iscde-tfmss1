@@ -2,7 +2,8 @@ package pa.iscde.search.visitors;
 
 import java.io.File;
 import java.util.ArrayList;
-import pa.iscde.search.internal.MatchResult;
+
+import pa.iscde.search.model.MatchResult;
 
 /**
  * Utility interface meant for visitors to implement. Allows visitors to set information for their current visit such as

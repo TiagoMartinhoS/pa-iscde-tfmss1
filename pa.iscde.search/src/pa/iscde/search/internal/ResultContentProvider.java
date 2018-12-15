@@ -3,6 +3,8 @@ package pa.iscde.search.internal;
 import java.util.List;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 
+import pa.iscde.search.model.MatchResult;
+
 /**
  * Content provider for the ListViewer widget. Provides the list of results for a search
  * @author tiagomartinho.soares

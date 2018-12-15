@@ -20,6 +20,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+
+import pa.iscde.search.model.MatchResult;
 import pa.iscde.search.services.SearchService;
 import pt.iscte.pidesco.extensibility.PidescoView;
 import pt.iscte.pidesco.javaeditor.service.JavaEditorServices;

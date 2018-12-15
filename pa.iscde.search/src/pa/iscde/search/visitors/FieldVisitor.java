@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
-import pa.iscde.search.internal.MatchResult;
+import pa.iscde.search.model.MatchResult;
 
 public class FieldVisitor extends ASTVisitor implements Searcher  {
 

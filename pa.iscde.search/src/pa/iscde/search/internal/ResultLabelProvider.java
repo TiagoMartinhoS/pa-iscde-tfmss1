@@ -4,6 +4,8 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
 
+import pa.iscde.search.model.MatchResult;
+
 /**
  * Label provider for the ListViewer widget. Allows to set the presented text in the ListViewer for the results
  * @author tiagomartinho.soares
