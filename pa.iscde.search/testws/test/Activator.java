@@ -7,8 +7,11 @@ import core.services.WindowService;
 
 public class Activator implements BundleActivator {
 
+	@NotNull
 	private OutlineService service;
 
+	public Activator() {
+	}
 	
 	public void start(BundleContext bundleContext) throws Exception {
 		service = new OutlineService();

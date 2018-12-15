@@ -5,14 +5,14 @@ import java.io.File;
 public class MatchResult {
 	
 	private File file;
-	private String methodName;
+	private String nodeName;
 	private int lineNumber;
 	private int startIndex;
 	
 	
-	public MatchResult(File file, String methodName, int lineNumber, int startIndex) {
+	public MatchResult(File file, String nodeName, int lineNumber, int startIndex) {
 		this.file = file;
-		this.methodName = methodName;
+		this.nodeName = nodeName;
 		this.setLineNumber(lineNumber);
 		this.setStartIndex(startIndex);
 	}
@@ -28,13 +28,13 @@ public class MatchResult {
 	}
 
 
-	public String getMethodName() {
-		return methodName;
+	public String getNodeName() {
+		return nodeName;
 	}
 
 
-	public void setMethodName(String methodName) {
-		this.methodName = methodName;
+	public void setNodeName(String nodeName) {
+		this.nodeName = nodeName;
 	}
 
 
@@ -59,7 +59,7 @@ public class MatchResult {
 	
 	@Override
 	public String toString() {
-		return file.getName() + ": " + methodName + " on line " + lineNumber + " offset " + startIndex;
+		return file.getName() + ": " + nodeName + " on line " + lineNumber;
 	}
 	
 	

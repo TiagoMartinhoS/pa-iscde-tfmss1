@@ -2,13 +2,10 @@ package pa.iscde.search.visitors;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
 import pa.iscde.search.internal.MatchResult;

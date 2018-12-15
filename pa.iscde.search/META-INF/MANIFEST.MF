@@ -3,10 +3,11 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Search
 Bundle-SymbolicName: pa.iscde.search;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: pa.iscde.search.internal.Activator
+Bundle-Activator: pa.iscde.search.internal.SearchActivator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: pa.iscde.search
-Import-Package: org.eclipse.jdt.core.compiler,
+Import-Package: org.eclipse.core.runtime;version="3.5.0",
+ org.eclipse.jdt.core.compiler,
  org.eclipse.jdt.core.dom,
  org.eclipse.jdt.internal.compiler,
  org.eclipse.jface.text,

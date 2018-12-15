@@ -1,30 +1,24 @@
 package pa.iscde.search.internal;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import pa.iscde.search.visitors.FieldVisitor;
-import pa.iscde.search.visitors.MethodVisitor;
-import pa.iscde.search.visitors.Searcher;
-import pa.iscde.search.visitors.TypeVisitor;
+import pa.iscde.search.services.SearchService;
 import pt.iscte.pidesco.extensibility.PidescoView;
 import pt.iscte.pidesco.javaeditor.service.JavaEditorServices;
 import pt.iscte.pidesco.projectbrowser.model.PackageElement;
@@ -32,28 +26,20 @@ import pt.iscte.pidesco.projectbrowser.service.ProjectBrowserServices;
 
 public class SearchView implements PidescoView {
 	
-	//Visitors
-	MethodVisitor methodVisitor = new MethodVisitor();
-	FieldVisitor fieldVisitor = new FieldVisitor();
-	TypeVisitor typeVisitor = new TypeVisitor();
+	private ProjectBrowserServices browser;
+	private JavaEditorServices editor;
+	private SearchService service;
 	
-	//Services
-	ProjectBrowserServices projBrowser;
-	JavaEditorServices editor;
-	
-
 	@Override
 	public void createContents(Composite viewArea, Map<String, Image> imageMap) {
 
-		BundleContext context = Activator.getContext();
 		viewArea.setLayout(new GridLayout(1, false));
 		
-		//Service references
-		ServiceReference<ProjectBrowserServices> serviceReference = context.getServiceReference(ProjectBrowserServices.class);
-		projBrowser= context.getService(serviceReference);
-		ServiceReference<JavaEditorServices> serviceReference2 = context.getServiceReference(JavaEditorServices.class);
-		editor = context.getService(serviceReference2);
-		
+		//Services
+		browser = SearchActivator.getInstance().getBrowser();
+		editor = SearchActivator.getInstance().getEditor();
+		service = SearchActivator.getInstance().getService();
+	
 		//Search label and box
 		Composite searchGroup = new Composite(viewArea, SWT.NONE);
 		GridLayout searchGroupLayout = new GridLayout(2, false);
@@ -76,10 +62,12 @@ public class SearchView implements PidescoView {
 		typeRadio.setText("Type");
 		typeRadio.setSelection(true);
 		Button methodRadio = new Button(group, SWT.RADIO);
-		methodRadio.setText("Method");
+		methodRadio.setText("Method / Constructor");
 		Button fieldRadio = new Button(group, SWT.RADIO);
 		fieldRadio.setText("Field");
-		GridData groupLayoutData = new GridData(150, 80);
+		Button packageRadio = new Button(group, SWT.RADIO);
+		packageRadio.setText("Package");
+		GridData groupLayoutData = new GridData(200, 110);
 		group.setLayoutData(groupLayoutData);
 		
 		
@@ -98,51 +86,38 @@ public class SearchView implements PidescoView {
 		listViewer.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		listViewer.setContentProvider(new ResultContentProvider());
 		listViewer.setLabelProvider(new ResultLabelProvider());
-		ResultList resultList = new ResultList();
-		
-		
+	
 		//ListViewer listener
 		listViewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
 			public void doubleClick(DoubleClickEvent arg0) {
 				int selection = listViewer.getList().getSelectionIndex();
 				MatchResult selected = (MatchResult) listViewer.getElementAt(selection);
-				editor.openFile(selected.getFile());
-				/*
-				 * Not working as expected
-				 */
-				editor.selectText(selected.getFile(), selected.getStartIndex(), 10);
-				
+				//Not working as expected
+				editor.selectText(selected.getFile(), selected.getStartIndex(), selected.getNodeName().length());	
 				
 			}
 		});
 		
-		//Search Listener
+		//SearchButton Listener
 		searchButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				PackageElement root = projBrowser.getRootPackage();
-
+				PackageElement root = browser.getRootPackage();
+				List<MatchResult> results = new ArrayList<>();
 				if (methodRadio.getSelection()) {
-					search(methodVisitor, searchBox.getText(), root, resultList);
+					results = service.searchMethod(searchBox.getText(), root);
 				} else if (fieldRadio.getSelection()) {
-					search(fieldVisitor, searchBox.getText(), root, resultList);
+					results = service.searchField(searchBox.getText(), root);
 				} else if (typeRadio.getSelection()) {
-					search(typeVisitor, searchBox.getText(), root, resultList);
+					results = service.searchType(searchBox.getText(), root);
+				} else if (packageRadio.getSelection()) {
+					results = service.searchPackage(searchBox.getText(), root);
 				}
-				listViewer.setInput(resultList);
+				listViewer.setInput(results);
 			}
 		});
 	}
-	
-	private void search(Searcher searcher, String input, PackageElement dir, ResultList resultList) {
-		searcher.clearResults();
-		searcher.setSearchInput(input);
-		Scanner.iterateAndWrite(dir, searcher, editor);
-		resultList.setResultList(searcher.getResults());
-	}
-	
-	
 	
 	
 }
