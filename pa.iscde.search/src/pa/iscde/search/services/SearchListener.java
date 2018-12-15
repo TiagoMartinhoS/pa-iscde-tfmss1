@@ -4,6 +4,11 @@ import java.util.List;
 
 import pa.iscde.search.internal.MatchResult;
 
+/**
+ * Represents a listener for events in the Search component
+ * @author tiagomartinho.soares
+ *
+ */
 public interface SearchListener {
 	
 	/**

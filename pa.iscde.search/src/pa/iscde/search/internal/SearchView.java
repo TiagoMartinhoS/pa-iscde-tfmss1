@@ -127,6 +127,10 @@ public class SearchView implements PidescoView {
 		});
 	}
 	
+	/**
+	 * Common search action for multiple listeners
+	 * @param input
+	 */
 	private void search(String input) {
 		PackageElement root = browser.getRootPackage();
 		List<MatchResult> results = new ArrayList<>();

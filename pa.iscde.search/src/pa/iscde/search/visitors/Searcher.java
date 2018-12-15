@@ -4,6 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 import pa.iscde.search.internal.MatchResult;
 
+/**
+ * Utility interface meant for visitors to implement. Allows visitors to set information for their current visit such as
+ * the file that's being parsed, what's being searched and results of said search
+ * @author tiagomartinho.soares
+ *
+ */
 public interface Searcher {
 	
 	/**

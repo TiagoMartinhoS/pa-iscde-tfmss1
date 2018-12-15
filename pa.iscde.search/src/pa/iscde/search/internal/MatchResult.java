@@ -2,10 +2,15 @@ package pa.iscde.search.internal;
 
 import java.io.File;
 
-public class MatchResult {
+/**
+ * Model of a result displayed in the ListViewer
+ * @author tiagomartinho.soares
+ *
+ */
+public final class MatchResult {
 	
 	private File file;
-	private String nodeName;
+	private String nodeName; //method, field, type, package name declarations
 	private int lineNumber;
 	private int startIndex;
 	
@@ -13,8 +18,8 @@ public class MatchResult {
 	public MatchResult(File file, String nodeName, int lineNumber, int startIndex) {
 		this.file = file;
 		this.nodeName = nodeName;
-		this.setLineNumber(lineNumber);
-		this.setStartIndex(startIndex);
+		this.lineNumber = lineNumber;
+		this.startIndex = startIndex;
 	}
 
 
@@ -22,39 +27,16 @@ public class MatchResult {
 		return file;
 	}
 
-
-	public void setFile(File file) {
-		this.file = file;
-	}
-
-
 	public String getNodeName() {
 		return nodeName;
 	}
-
-
-	public void setNodeName(String nodeName) {
-		this.nodeName = nodeName;
-	}
-
 
 	public int getLineNumber() {
 		return lineNumber;
 	}
 
-
-	public void setLineNumber(int lineNumber) {
-		this.lineNumber = lineNumber;
-	}
-
-
 	public int getStartIndex() {
 		return startIndex;
-	}
-
-
-	public void setStartIndex(int startIndex) {
-		this.startIndex = startIndex;
 	}
 	
 	@Override

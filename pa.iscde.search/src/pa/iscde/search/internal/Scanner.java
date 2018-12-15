@@ -8,6 +8,11 @@ import pt.iscte.pidesco.javaeditor.service.JavaEditorServices;
 import pt.iscte.pidesco.projectbrowser.model.PackageElement;
 import pt.iscte.pidesco.projectbrowser.model.SourceElement;
 
+/**
+ * Utility class that allows to iterate through files and inspect them with a visitor
+ * @author tiagomartinho.soares
+ *
+ */
 public class Scanner {
 
 	static JavaEditorServices editor;
