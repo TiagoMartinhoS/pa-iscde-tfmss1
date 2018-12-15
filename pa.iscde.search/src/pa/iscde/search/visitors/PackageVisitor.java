@@ -24,7 +24,7 @@ public class PackageVisitor extends ASTVisitor implements Searcher {
 	@Override
 	public boolean visit(PackageDeclaration node) {
 		String name = node.getName().toString();
-		if (name.equals(searchInput)) {
+		if (name.toLowerCase().contains(searchInput.toLowerCase())) {
 			matches.add(new MatchResult(file, name, sourceLine(node), node.getName().getStartPosition()));
 		}
 		return true;

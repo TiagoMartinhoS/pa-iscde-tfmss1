@@ -7,7 +7,6 @@ import core.services.WindowService;
 
 public class Activator implements BundleActivator {
 
-	@NotNull
 	private OutlineService service;
 
 	public Activator() {

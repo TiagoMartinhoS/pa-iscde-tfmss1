@@ -27,7 +27,7 @@ public class FieldVisitor extends ASTVisitor implements Searcher  {
 		for(Object o : node.fragments()) {
 			VariableDeclarationFragment var = (VariableDeclarationFragment) o;
 			String name = var.getName().toString();
-			if (name.equals(searchInput)) {
+			if (name.toLowerCase().contains(searchInput.toLowerCase())) {
 				matches.add(new MatchResult(file, name, sourceLine(node), var.getName().getStartPosition()));
 			}
 		}

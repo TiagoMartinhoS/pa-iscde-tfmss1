@@ -7,6 +7,8 @@ import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -29,6 +31,11 @@ public class SearchView implements PidescoView {
 	private ProjectBrowserServices browser;
 	private JavaEditorServices editor;
 	private SearchService service;
+	private Button typeRadio;
+	private Button methodRadio;
+	private Button fieldRadio;
+	private Button packageRadio;
+	private ListViewer listViewer;
 	
 	@Override
 	public void createContents(Composite viewArea, Map<String, Image> imageMap) {
@@ -58,14 +65,14 @@ public class SearchView implements PidescoView {
 		groupLayout.marginTop = 5;
 		group.setLayout(groupLayout);
 		group.setText("Search for:");
-		Button typeRadio = new Button(group, SWT.RADIO);
+		typeRadio = new Button(group, SWT.RADIO);
 		typeRadio.setText("Type");
 		typeRadio.setSelection(true);
-		Button methodRadio = new Button(group, SWT.RADIO);
+		methodRadio = new Button(group, SWT.RADIO);
 		methodRadio.setText("Method / Constructor");
-		Button fieldRadio = new Button(group, SWT.RADIO);
+		fieldRadio = new Button(group, SWT.RADIO);
 		fieldRadio.setText("Field");
-		Button packageRadio = new Button(group, SWT.RADIO);
+		packageRadio = new Button(group, SWT.RADIO);
 		packageRadio.setText("Package");
 		GridData groupLayoutData = new GridData(200, 110);
 		group.setLayoutData(groupLayoutData);
@@ -82,7 +89,7 @@ public class SearchView implements PidescoView {
 		searchButton.setLayoutData(searchButtonData);
 		
 		//ListViewer
-		final ListViewer listViewer = new ListViewer(viewArea);
+		listViewer = new ListViewer(viewArea);
 		listViewer.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		listViewer.setContentProvider(new ResultContentProvider());
 		listViewer.setLabelProvider(new ResultLabelProvider());
@@ -103,20 +110,36 @@ public class SearchView implements PidescoView {
 		searchButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				PackageElement root = browser.getRootPackage();
-				List<MatchResult> results = new ArrayList<>();
-				if (methodRadio.getSelection()) {
-					results = service.searchMethod(searchBox.getText(), root);
-				} else if (fieldRadio.getSelection()) {
-					results = service.searchField(searchBox.getText(), root);
-				} else if (typeRadio.getSelection()) {
-					results = service.searchType(searchBox.getText(), root);
-				} else if (packageRadio.getSelection()) {
-					results = service.searchPackage(searchBox.getText(), root);
-				}
-				listViewer.setInput(results);
+				search(searchBox.getText());
 			}
 		});
+		
+		//SearchBox EnterKey Listener
+		searchBox.addKeyListener(new KeyListener() {		
+			@Override
+			public void keyReleased(KeyEvent arg0) {}	
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if (arg0.character == SWT.CR) {
+					search(searchBox.getText());
+				}
+			}
+		});
+	}
+	
+	private void search(String input) {
+		PackageElement root = browser.getRootPackage();
+		List<MatchResult> results = new ArrayList<>();
+		if (methodRadio.getSelection()) {
+			results = service.searchMethod(input, root);
+		} else if (fieldRadio.getSelection()) {
+			results = service.searchField(input, root);
+		} else if (typeRadio.getSelection()) {
+			results = service.searchType(input, root);
+		} else if (packageRadio.getSelection()) {
+			results = service.searchPackage(input, root);
+		}
+		listViewer.setInput(results);
 	}
 	
 	
