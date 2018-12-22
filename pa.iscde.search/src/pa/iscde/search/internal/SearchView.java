@@ -1,14 +1,18 @@
 package pa.iscde.search.internal;
 
 import java.util.ArrayList;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import java.util.List;
 import java.util.Map;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -20,7 +24,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
+import pa.iscde.search.extensibility.SearchProvider;
 import pa.iscde.search.model.MatchResult;
 import pa.iscde.search.services.SearchService;
 import pt.iscte.pidesco.extensibility.PidescoView;
@@ -117,9 +121,7 @@ public class SearchView implements PidescoView {
 		});
 		
 		//SearchBox EnterKey Listener
-		searchBox.addKeyListener(new KeyListener() {		
-			@Override
-			public void keyReleased(KeyEvent arg0) {}	
+		searchBox.addKeyListener(new KeyAdapter() {		
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 				if (arg0.character == SWT.CR) {
@@ -127,6 +129,27 @@ public class SearchView implements PidescoView {
 				}
 			}
 		});
+		
+		//Extension point
+		IExtensionRegistry reg = Platform.getExtensionRegistry();
+		IConfigurationElement[] elements = reg.getConfigurationElementsFor("pt.iscde.search.search");
+		for(IConfigurationElement e : elements) {
+			String name = e.getAttribute("name");
+			Button newSearchButton = new Button(group, SWT.RADIO);
+			newSearchButton.setText(name);
+			try {
+				SearchProvider searcher = (SearchProvider) e.createExecutableExtension("class");
+				searchButton.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						listViewer.setInput(searcher.searchFor(name, searchBox.getText()));
+					}
+				});
+			} catch (CoreException e1) {
+				e1.printStackTrace();
+			}
+			
+		}
 	}
 	
 	/**

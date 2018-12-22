@@ -1,3 +1,10 @@
 eclipse.preferences.version=1
-encoding//testws/OutlineService.java=UTF-16
+encoding//src/pa/iscde/search/internal/SearchView.java=UTF-8
+encoding//testws/OutlineService.java=UTF-8
 encoding//testws/TestClass.java=UTF-8
+encoding//testws/annotations/ForeignKey.java=UTF-8
+encoding//testws/annotations/NotNull.java=UTF-8
+encoding//testws/annotations/PrimaryKey.java=UTF-8
+encoding//testws/annotations/Table.java=UTF-8
+encoding//testws/annotations/processor/SQLAnnotationsProcessor.java=UTF-8
+encoding//testws/test/Activator.java=UTF-8
