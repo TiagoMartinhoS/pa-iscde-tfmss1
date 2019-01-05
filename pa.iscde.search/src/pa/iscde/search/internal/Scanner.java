@@ -3,7 +3,8 @@ package pa.iscde.search.internal;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import pa.iscde.search.visitors.Searcher;
+
+import pa.iscde.search.internal.visitors.Searcher;
 import pt.iscte.pidesco.javaeditor.service.JavaEditorServices;
 import pt.iscte.pidesco.projectbrowser.model.PackageElement;
 import pt.iscte.pidesco.projectbrowser.model.SourceElement;

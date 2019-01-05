@@ -1,17 +1,18 @@
 package pa.iscde.search.internal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.eclipse.core.runtime.Assert;
 
+import pa.iscde.search.internal.visitors.FieldVisitor;
+import pa.iscde.search.internal.visitors.MethodVisitor;
+import pa.iscde.search.internal.visitors.PackageVisitor;
+import pa.iscde.search.internal.visitors.Searcher;
+import pa.iscde.search.internal.visitors.TypeVisitor;
 import pa.iscde.search.model.MatchResult;
 import pa.iscde.search.services.SearchListener;
 import pa.iscde.search.services.SearchService;
-import pa.iscde.search.visitors.FieldVisitor;
-import pa.iscde.search.visitors.MethodVisitor;
-import pa.iscde.search.visitors.PackageVisitor;
-import pa.iscde.search.visitors.Searcher;
-import pa.iscde.search.visitors.TypeVisitor;
 import pt.iscte.pidesco.projectbrowser.model.PackageElement;
 
 public class SearchServiceImpl implements SearchService {
@@ -27,28 +28,28 @@ public class SearchServiceImpl implements SearchService {
 	public List<MatchResult> searchType(String input, PackageElement dir) {
 		TypeVisitor visitor = new TypeVisitor();
 		List<MatchResult> resultList = search(visitor, input, dir);
-		return resultList;
+		return Collections.unmodifiableList(resultList);
 	}
 
 	@Override
 	public List<MatchResult> searchMethod(String input, PackageElement dir) {
 		MethodVisitor visitor = new MethodVisitor();
 		List<MatchResult> resultList = search(visitor, input, dir);
-		return resultList;
+		return Collections.unmodifiableList(resultList);
 	}
 
 	@Override
 	public List<MatchResult> searchField(String input, PackageElement dir) {
 		FieldVisitor visitor = new FieldVisitor();
 		List<MatchResult> resultList = search(visitor, input, dir);
-		return resultList;
+		return Collections.unmodifiableList(resultList);
 	}
 	
 	@Override
 	public List<MatchResult> searchPackage(String input, PackageElement dir) {
 		PackageVisitor visitor = new PackageVisitor();
 		List<MatchResult> resultList = search(visitor, input, dir);
-		return resultList;
+		return Collections.unmodifiableList(resultList);
 	}
 	
 

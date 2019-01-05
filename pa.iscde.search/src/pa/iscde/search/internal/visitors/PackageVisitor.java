@@ -1,16 +1,17 @@
-package pa.iscde.search.visitors;
+package pa.iscde.search.internal.visitors;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.PackageDeclaration;
 
 import pa.iscde.search.model.MatchResult;
 
-public class TypeVisitor extends ASTVisitor implements Searcher {
-
+public class PackageVisitor extends ASTVisitor implements Searcher {
+	
 	private ArrayList<MatchResult> matches = new ArrayList<MatchResult>();
 	private String searchInput = null;
 	private File file = null;
@@ -21,7 +22,7 @@ public class TypeVisitor extends ASTVisitor implements Searcher {
 	
 	// visits class/interface declaration
 	@Override
-	public boolean visit(TypeDeclaration node) {
+	public boolean visit(PackageDeclaration node) {
 		String name = node.getName().toString();
 		if (name.toLowerCase().contains(searchInput.toLowerCase())) {
 			matches.add(new MatchResult(file, name, sourceLine(node), node.getName().getStartPosition()));

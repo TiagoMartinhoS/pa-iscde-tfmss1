@@ -1,4 +1,4 @@
-package pa.iscde.search.visitors;
+package pa.iscde.search.internal.visitors;
 
 import java.io.File;
 import java.util.ArrayList;
