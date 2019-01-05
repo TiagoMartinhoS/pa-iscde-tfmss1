@@ -27,7 +27,6 @@ public class SearchServiceImpl implements SearchService {
 	public List<MatchResult> searchType(String input, PackageElement dir) {
 		TypeVisitor visitor = new TypeVisitor();
 		List<MatchResult> resultList = search(visitor, input, dir);
-		SearchActivator.getInstance().notifySearchComplete(input, resultList);
 		return resultList;
 	}
 
@@ -35,7 +34,6 @@ public class SearchServiceImpl implements SearchService {
 	public List<MatchResult> searchMethod(String input, PackageElement dir) {
 		MethodVisitor visitor = new MethodVisitor();
 		List<MatchResult> resultList = search(visitor, input, dir);
-		SearchActivator.getInstance().notifySearchComplete(input, resultList);
 		return resultList;
 	}
 
@@ -43,7 +41,6 @@ public class SearchServiceImpl implements SearchService {
 	public List<MatchResult> searchField(String input, PackageElement dir) {
 		FieldVisitor visitor = new FieldVisitor();
 		List<MatchResult> resultList = search(visitor, input, dir);
-		SearchActivator.getInstance().notifySearchComplete(input, resultList);
 		return resultList;
 	}
 	
@@ -51,10 +48,8 @@ public class SearchServiceImpl implements SearchService {
 	public List<MatchResult> searchPackage(String input, PackageElement dir) {
 		PackageVisitor visitor = new PackageVisitor();
 		List<MatchResult> resultList = search(visitor, input, dir);
-		SearchActivator.getInstance().notifySearchComplete(input, resultList);
 		return resultList;
 	}
-	
 	
 
 	@Override

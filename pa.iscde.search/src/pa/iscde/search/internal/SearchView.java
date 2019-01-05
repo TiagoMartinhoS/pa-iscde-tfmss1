@@ -80,9 +80,8 @@ public class SearchView implements PidescoView {
 		fieldRadio.setText("Field");
 		packageRadio = new Button(group, SWT.RADIO);
 		packageRadio.setText("Package");
-		GridData groupLayoutData = new GridData(200, 110);
+		GridData groupLayoutData = new GridData(200, 100);
 		group.setLayoutData(groupLayoutData);
-		
 		
 		//Search Button
 		Composite searchComposite = new Composite(viewArea, SWT.NONE);
@@ -106,7 +105,6 @@ public class SearchView implements PidescoView {
 			public void doubleClick(DoubleClickEvent arg0) {
 				int selection = listViewer.getList().getSelectionIndex();
 				MatchResult selected = (MatchResult) listViewer.getElementAt(selection);
-				//Not working as expected
 				editor.selectText(selected.getFile(), selected.getStartIndex(), selected.getNodeName().length());	
 				
 			}
@@ -132,9 +130,10 @@ public class SearchView implements PidescoView {
 		
 		//Extension point
 		IExtensionRegistry reg = Platform.getExtensionRegistry();
-		IConfigurationElement[] elements = reg.getConfigurationElementsFor("pt.iscde.search.search");
+		IConfigurationElement[] elements = reg.getConfigurationElementsFor("pa.iscde.search.search");
 		for(IConfigurationElement e : elements) {
 			String name = e.getAttribute("name");
+			groupLayoutData.heightHint += 25;
 			Button newSearchButton = new Button(group, SWT.RADIO);
 			newSearchButton.setText(name);
 			try {
@@ -142,7 +141,9 @@ public class SearchView implements PidescoView {
 				searchButton.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
-						listViewer.setInput(searcher.searchFor(name, searchBox.getText()));
+						List<MatchResult> resultList = searcher.searchFor(name, searchBox.getText());
+						listViewer.setInput(resultList);
+						SearchActivator.getInstance().notifySearchComplete(searchBox.getText(), resultList);
 					}
 				});
 			} catch (CoreException e1) {
@@ -168,6 +169,7 @@ public class SearchView implements PidescoView {
 		} else if (packageRadio.getSelection()) {
 			results = service.searchPackage(input, root);
 		}
+		SearchActivator.getInstance().notifySearchComplete(input, results);
 		listViewer.setInput(results);
 	}
 	
