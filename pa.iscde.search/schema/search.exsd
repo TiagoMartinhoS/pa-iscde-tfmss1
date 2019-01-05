@@ -6,7 +6,7 @@
          <meta.schema plugin="pa.iscde.search" id="search" name="Search"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         This extension point allows other components to integrate with Search component in order to provide their own search type implementations.
       </documentation>
    </annotation>
 
@@ -52,14 +52,14 @@
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
-                  name of the type of search
+                  Name of the type of search that is being added to the Search component
                </documentation>
             </annotation>
          </attribute>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  Implementing class for SearchProvider interface
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":pa.iscde.search.extensibility.SearchProvider"/>
