@@ -13,7 +13,7 @@ public interface SearchProvider {
 
 	/**
 	 * This method will be implemented by other contributors. 
-	 * The search component uses that implementation get a list of results for the given search type and search input.
+	 * The search component uses that implementation to get a list of results for the given search type and search input.
 	 * @param type what search type is being used (comment, package, method, etc)
 	 * @param input what is being searched
 	 * @return list of results found in the search

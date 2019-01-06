@@ -28,7 +28,6 @@ public class TestView implements PidescoView {
 		textArea.setEditable(false);
 		
 		search.addListener(new SearchListener() {
-			
 			@Override
 			public void searchComplete(String searchInput, List<MatchResult> resultList) {
 				textArea.append("Search: " + searchInput + System.lineSeparator());
