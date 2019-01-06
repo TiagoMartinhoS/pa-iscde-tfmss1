@@ -13,7 +13,7 @@ import pt.iscte.pidesco.projectbrowser.model.PackageElement;
 public interface SearchService {
 	
 	/**
-	 * Searches type declarations in the current workspace for the given input and directory
+	 * Searches type declarations in the current workspace for the given input and directory.
 	 * @param input (non-null) string that is being searched
 	 * @param dir where the input is being searched
 	 * @return list containing the results for the given input
@@ -21,7 +21,7 @@ public interface SearchService {
 	List<MatchResult> searchType(String input, PackageElement dir);
 	
 	/**
-	 * Searches method declarations in the current workspace for the given input and directory
+	 * Searches method / constructor declarations in the current workspace for the given input and directory.
 	 * @param input (non-null) string that is being searched
 	 * @param dir where the input is being searched
 	 * @return list containing the results for the given input
@@ -30,7 +30,7 @@ public interface SearchService {
 	List<MatchResult> searchMethod(String input, PackageElement dir);
 	
 	/**
-	 * Searches field declarations in the current workspace for the given input and directory
+	 * Searches field declarations in the current workspace for the given input and directory.
 	 * @param input (non-null) string that is being searched
 	 * @param dir where the input is being searched
 	 * @return list containing the results for the given input
@@ -39,7 +39,7 @@ public interface SearchService {
 	List<MatchResult> searchField(String input, PackageElement dir);
 	
 	/**
-	 * Searches package declarations in the current workspace for the given input and directory
+	 * Searches package declarations in the current workspace for the given input and directory.
 	 * @param input (non-null) string that is being searched
 	 * @param dir where the input is being searched
 	 * @return list containing the results for the given input
