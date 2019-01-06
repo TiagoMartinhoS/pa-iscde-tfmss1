@@ -95,7 +95,7 @@ public class SearchView implements PidescoView {
 		
 		//ListViewer
 		listViewer = new ListViewer(viewArea);
-		listViewer.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		listViewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
 		listViewer.setContentProvider(new ResultContentProvider());
 		listViewer.setLabelProvider(new ResultLabelProvider());
 	
@@ -141,9 +141,11 @@ public class SearchView implements PidescoView {
 				searchButton.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
-						List<MatchResult> resultList = searcher.searchFor(name, searchBox.getText());
-						listViewer.setInput(resultList);
-						SearchActivator.getInstance().notifySearchComplete(searchBox.getText(), resultList);
+						if (newSearchButton.getSelection()) {
+							List<MatchResult> resultList = searcher.searchFor(name, searchBox.getText());
+							listViewer.setInput(resultList);
+							SearchActivator.getInstance().notifySearchComplete(searchBox.getText(), resultList);
+						}
 					}
 				});
 			} catch (CoreException e1) {
